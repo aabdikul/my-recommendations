@@ -47,6 +47,10 @@ function renderBooks(books) {
 		p1.innerHTML = "Genre: " + e.genre
 		left.appendChild(p1)
 
+		let img = document.createElement('img')
+		img.src = e.image
+		right.appendChild(img)
+
 		main.appendChild(card)
 	})
 }
