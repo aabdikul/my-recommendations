@@ -14,6 +14,7 @@ function fetchBooks() {
 		})
 		.then(function(json) {
 		renderBooks(json);
+		renderReviews(json)
 		});
 }
 
@@ -52,6 +53,19 @@ function renderBooks(books) {
 		img.src = e.image
 		right.appendChild(img)
 
+		const whiteHeart = '\u2661';
+		const blackHeart = '\u2665';
+
+		let favorite = document.createElement("button")
+			if (e.favorite == true) {
+				favorite.innerHTML = blackHeart
+			}
+			else {
+				favorite.innerHTML = whiteHeart
+			}
+		left.appendChild(favorite)
+
+
 		let seeReviews = document.createElement('button')
 		seeReviews.innerHTML = "See Reviews"
 		left.appendChild(seeReviews)
@@ -59,6 +73,10 @@ function renderBooks(books) {
 		seeReviews.addEventListener('click', function(event) {
 			renderReviews()
 		})
+
+		let readTag = document.createElement("button")
+		readTag.innerHTML = e.read
+		left.appendChild(readTag)
 
 		return main.appendChild(card)
 	})
@@ -78,6 +96,10 @@ function renderReviews(books) {
 
 	return main.appendChild(reviewCard)
 }
+
+
+
+
 
 
 
