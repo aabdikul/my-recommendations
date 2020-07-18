@@ -2,21 +2,22 @@ const BOOKS_URL = "http://localhost:3000/books"
 
 document.addEventListener("DOMContentLoaded", function() {
 	fetchBooks();
+
 })	
 
+let main = document.querySelector('main')
+
 function fetchBooks() {
-	//Grabbing the full array of all of the books from my backend DB. 
 	fetch(BOOKS_URL)
 		.then(function(response) {
 		return response.json();
 		})
 		.then(function(json) {
-		return renderBooks(json);
+		renderBooks(json);
 		});
 }
 
-function renderBooks(books) {
-	let main = document.querySelector('main')
+function renderBooks(books) {	
 
 	books.map(function(e) {
 		let card = document.createElement('div')
@@ -51,7 +52,34 @@ function renderBooks(books) {
 		img.src = e.image
 		right.appendChild(img)
 
-		main.appendChild(card)
+		let seeReviews = document.createElement('button')
+		seeReviews.innerHTML = "See Reviews"
+		left.appendChild(seeReviews)
+
+		seeReviews.addEventListener('click', function(event) {
+			renderReviews()
+		})
+
+		return main.appendChild(card)
 	})
 }
+
+function renderReviews(books) {
+	let reviewCard = document.createElement('div')
+	reviewCard.setAttribute("class", "card")
+
+	books.map(function(book) {
+		book.reviews.map(function(review) {
+			let eachReview = document.createElement('p')
+			eachReview.innerHTML = "Review: " + review.review
+			reviewCard.appendChild(eachReview)
+		})
+	})
+
+	return main.appendChild(reviewCard)
+}
+
+
+
+
 

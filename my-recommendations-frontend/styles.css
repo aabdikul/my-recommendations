@@ -1,6 +1,6 @@
   body {
-        background-image: url("https://images.unsplash.com/photo-1510172951991-856a654063f9?ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80");
-        background-repeat: no-repeat;
+        background-image: url("https://images.unsplash.com/photo-1514638585978-b017be831e71?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60");
+      	background-repeat: no-repeat;
         background-attachment: fixed;
         background-size: cover;
        }
@@ -45,10 +45,6 @@
 	display: inline-block;
 }
 
-img {
-    max-width: 100%;
-    max-height: 100%;
-}
-
+#container img {max-width: 100%;max-height: 100%;}
 
 
