@@ -155,6 +155,14 @@ function updateDatabaseHeart(bookId,trueFalseValue) {
 	})
 }
 
+function updateReadStatus(bookId, readUnreadStatus) {
+	let formData = {
+		book_id: bookId,
+		read: !readUnreadStatus
+	};
+	
+}
+
 
 
 
