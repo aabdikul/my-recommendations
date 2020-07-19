@@ -10,6 +10,23 @@ class BooksController < ApplicationController
 		)
 	end
 
+	def show
+		book = Book.find_by_id(params[:id])
+		render json: book.to_json(
+			:except => [:created_at, :updated_at]
+		)
+	end
+
+	def update
+		book = Book.find_by_id(params[:book_id])
+		book.update(params.require(:book).permit(:favorite))
+		render json: book.to_json(
+			:except => [:created_at, :updated_at]
+		)
+	end
+
+
+
 end
 
 

@@ -1,20 +1,22 @@
 const BOOKS_URL = "http://localhost:3000/books"
 
 document.addEventListener("DOMContentLoaded", function() {
-	fetchBooks();
-
+	fetchBooks()
 })	
 
 let main = document.querySelector('main')
+const whiteHeart = '\u2661';
+const blackHeart = '\u2665';
 
 function fetchBooks() {
-	fetch(BOOKS_URL)
+	return fetch(BOOKS_URL)
 		.then(function(response) {
 		return response.json();
 		})
 		.then(function(json) {
 		renderBooks(json);
 		renderReviews(json)
+		return json
 		});
 }
 
@@ -53,17 +55,19 @@ function renderBooks(books) {
 		img.src = e.image
 		right.appendChild(img)
 
-		const whiteHeart = '\u2661';
-		const blackHeart = '\u2665';
-
-		let favorite = document.createElement("button")
+		let favorite = document.createElement("span")
+		favorite.classList.add("heart")
 			if (e.favorite == true) {
-				favorite.innerHTML = blackHeart
+				favorite.innerHTML = blackHeart //true
 			}
 			else {
-				favorite.innerHTML = whiteHeart
+				favorite.innerHTML = whiteHeart //false
 			}
 		left.appendChild(favorite)
+
+		favorite.addEventListener("click", function(event) {
+			favoriteBook(e.id, favorite)
+		})
 
 
 		let seeReviews = document.createElement('button')
@@ -74,7 +78,7 @@ function renderBooks(books) {
 			renderReviews()
 		})
 
-		let readTag = document.createElement("button")
+		let readTag = document.createElement("span")
 		readTag.innerHTML = e.read
 		left.appendChild(readTag)
 
@@ -97,10 +101,55 @@ function renderReviews(books) {
 	return main.appendChild(reviewCard)
 }
 
+function favoriteBook(bookId, heartSpan) {
+
+	function trueOrFalse() {
+		if (heartSpan.innerHTML == blackHeart) {
+			return true
+		}
+		else {
+			return false
+		}
+	}
+
+	updateDatabaseHeart(bookId, trueOrFalse())
+	.then(function(e) {
+		if (!trueOrFalse() == true) {
+			heartSpan.innerHTML = blackHeart
+		}
+		else {
+			heartSpan.innerHTML = whiteHeart
+		}
+	})
+}
 
 
 
+function updateDatabaseHeart(bookId,trueFalseValue) {
+	let formData = {
+		book_id: bookId, 
+		favorite: !trueFalseValue
+	};
 
+	let configObj = {
+		method: "PATCH",
+		headers: {
+			"Content-Type": "application/json",
+			"Accept": "application/json"
+		},
+		body: JSON.stringify(formData)
+	};
+
+	return fetch(`http://localhost:3000/books/${bookId}`,configObj)
+
+	.then(function(response) {
+		return response.json();
+	})
+	.then(function(json) {
+				console.log(json)
+		return json;
+	})
+}
 
 
 
