@@ -13,6 +13,9 @@ class BooksController < ApplicationController
 	def show
 		book = Book.find_by_id(params[:id])
 		render json: book.to_json(
+			:include => {
+				:reviews => {:except => [:created_at, :updated_at]}
+			},
 			:except => [:created_at, :updated_at]
 		)
 	end

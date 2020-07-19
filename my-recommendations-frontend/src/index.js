@@ -75,7 +75,7 @@ function renderBooks(books) {
 		left.appendChild(seeReviews)
 
 		seeReviews.addEventListener('click', function(event) {
-			renderReviews()
+			renderReviews(e.id)
 		})
 
 		let readTag = document.createElement("span")
@@ -86,19 +86,24 @@ function renderBooks(books) {
 	})
 }
 
-function renderReviews(books) {
-	let reviewCard = document.createElement('div')
-	reviewCard.setAttribute("class", "card")
+function renderReviews(bookId) {
 
-	books.map(function(book) {
-		book.reviews.map(function(review) {
-			let eachReview = document.createElement('p')
-			eachReview.innerHTML = "Review: " + review.review
-			reviewCard.appendChild(eachReview)
+	let backCard = document.createElement('div')
+
+	return fetch(`http://localhost:3000/books/${bookId}`)
+
+		.then(function(response) {
+			return response.json();
 		})
-	})
+		.then(function(json) {
+			json.reviews.map(function(reviews) {
+				let userReviews = document.createElement('p')
+				userReviews.innerHTML = reviews.review
+				backCard.appendChild(userReviews)
+			})
+		main.appendChild(backCard)
+		})
 
-	return main.appendChild(reviewCard)
 }
 
 function favoriteBook(bookId, heartSpan) {
@@ -146,7 +151,6 @@ function updateDatabaseHeart(bookId,trueFalseValue) {
 		return response.json();
 	})
 	.then(function(json) {
-				console.log(json)
 		return json;
 	})
 }
