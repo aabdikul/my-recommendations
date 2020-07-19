@@ -23,9 +23,14 @@ function fetchBooks() {
 function renderBooks(books) {	
 
 	books.map(function(e) {
+
+		let cardsContainer = document.createElement('div')
+		cardsContainer.setAttribute("class", "flip-card-container")
+		main.appendChild(cardsContainer)
+
 		let card = document.createElement('div')
 		card.setAttribute("class", "card")
-		card.setAttribute("id", "container")
+		cardsContainer.appendChild(card)
 
 		let left = document.createElement('div')
 		left.setAttribute("class", "left")
@@ -74,21 +79,62 @@ function renderBooks(books) {
 		seeReviews.innerHTML = "See Reviews"
 		left.appendChild(seeReviews)
 
-		seeReviews.addEventListener('click', function(event) {
-			renderReviews(e.id)
-		})
+		seeReviews.onclick = function(event) {
+
+    		if (backCard.style.transform == "rotateY(180deg)") {
+     			backCard.style.transform = "rotateY(0deg)";
+    			}
+    		else {
+     			backCard.style.transform = "rotateY(180deg)";
+    		}
+
+		}
 
 		let readTag = document.createElement("span")
-		readTag.innerHTML = e.read
+		readTag.classList.add("read")
+		if (e.read_status == true) {
+			readTag.innerHTML = "Read"
+		}
+		else {
+			readTag.innerHTML = "Unread"
+		}
 		left.appendChild(readTag)
 
-		return main.appendChild(card)
+		readTag.addEventListener("click", function(event) {
+			markRead(e.id, readTag)
+		})
+
+		let backCard = document.createElement('div')
+		backCard.setAttribute("class", "back-card")
+		renderReviews(e.id).then(function(thingis) {
+			thingis.map(function(thingi) {
+				backCard.appendChild(thingi)
+			})
+		})
+
+		let backHeader = document.createElement('h2')
+		backHeader.innerHTML = `Reviews of ${e.title}`
+		backCard.appendChild(backHeader)
+
+		let frontButton = document.createElement('button')
+		frontButton.innerHTML = "Return to Book"
+		backCard.appendChild(frontButton)
+
+		frontButton.onclick= function(event) {
+			if (backCard.style.transform == "rotateY(180deg)") {
+     			backCard.style.transform = "rotateY(0deg)";
+    			}
+    		else {
+     			backCard.style.transform = "rotateY(180deg)";
+    		}
+		}
+
+		cardsContainer.appendChild(backCard)	
+
 	})
 }
 
 function renderReviews(bookId) {
-
-	let backCard = document.createElement('div')
 
 	return fetch(`http://localhost:3000/books/${bookId}`)
 
@@ -96,12 +142,12 @@ function renderReviews(bookId) {
 			return response.json();
 		})
 		.then(function(json) {
-			json.reviews.map(function(reviews) {
+			return json.reviews.map(function(objects) {
 				let userReviews = document.createElement('p')
-				userReviews.innerHTML = reviews.review
-				backCard.appendChild(userReviews)
+				userReviews.innerHTML = objects.review
+				return userReviews
 			})
-		main.appendChild(backCard)
+		
 		})
 
 }
@@ -155,13 +201,54 @@ function updateDatabaseHeart(bookId,trueFalseValue) {
 	})
 }
 
+function markRead(bookId, readSpan) {
+
+	function readOrUnread() {
+		if (readSpan.innerHTML == "Read") {
+			return true
+		}
+		else {
+			return false
+		}
+	}
+
+	updateReadStatus(bookId, readOrUnread())
+	.then(function(e) {
+		if (!readOrUnread() == true) {
+			readSpan.innerHTML = "Read"
+		}
+		else {
+			readSpan.innerHTML = "Unread"
+		}
+	})
+}
+
 function updateReadStatus(bookId, readUnreadStatus) {
 	let formData = {
 		book_id: bookId,
-		read: !readUnreadStatus
+		read_status: !readUnreadStatus
 	};
-	
+
+	let configObj = {
+		method: "PATCH",
+		headers: {
+			"Content-Type": "application/json",
+			"Accept": "application/json"
+		},
+		body: JSON.stringify(formData)
+	};
+
+	return fetch(`http://localhost:3000/books/${bookId}`,configObj)
+
+	.then(function(response) {
+		return response.json();
+	})
+	.then(function(json) {
+		return json;
+	})
+
 }
+
 
 
 

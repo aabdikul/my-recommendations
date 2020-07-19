@@ -11,15 +11,38 @@
   	font-size: 250%;
   }
 
-#container{
+.flip-card-container {
+	height: 350px;
+	width: 700px;
+	margin: 5em auto;
+}
+
+.back-card {
+	position: absolute;
 	box-shadow: 0 15px 30px 1px rgba(128, 128, 128, 0.31);
 	background: rgba(255, 255, 255, 0.90);
 	text-align: center;
 	border-radius: 5px;
 	overflow: hidden;
-	margin: 5em auto;
+	margin: 0em auto;
 	height: 350px;
 	width: 700px;
+	backface-visibility: hidden;
+	transform: rotateY(180deg);
+}
+
+.card {
+	position: absolute;
+	box-shadow: 0 15px 30px 1px rgba(128, 128, 128, 0.31);
+	background: rgba(255, 255, 255, 0.90);
+	text-align: center;
+	border-radius: 5px;
+	overflow: hidden;
+	margin: 0em auto;
+	height: 350px;
+	width: 700px;
+	backface-visibility: hidden;
+
 	
 }
 
@@ -45,6 +68,6 @@
 	display: inline-block;
 }
 
-#container img {max-width: 100%;max-height: 100%;}
+.card img {max-width: 100%;max-height: 100%;}
 
 
