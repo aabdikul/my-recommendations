@@ -8,7 +8,7 @@ const whiteHeart = '\u2661';
 const blackHeart = '\u2665';
 
 document.addEventListener("DOMContentLoaded", function() {
-	fetchBooks(); 
+	fetchBooks();
 
 	const newBookBtn = document.querySelector("#new-book") //button to add a new book
 	const bookFormContainer = document.getElementById("book-form");//add book form
@@ -66,6 +66,7 @@ class Card {
 	}
 
 	renderCard() {//render cards function
+
 		let cardsContainer = document.createElement('div') //creates entire card container 
 		cardsContainer.setAttribute("class", "flip-card-container")
 		main.appendChild(cardsContainer) 
@@ -128,6 +129,7 @@ class Card {
 
 		let favorite = document.createElement("span")//heart icon 
 		favorite.classList.add("heart")
+		favorite.setAttribute("id", `heart-${this.id}`)
 			
 			if (this.favorite == true) {//if favorite is true, set to blackheart
 				favorite.innerHTML = blackHeart 
@@ -206,17 +208,27 @@ class Card {
 			backCard.appendChild(reviewFormContainer)
 		}
 
-		let writtenReview = document.querySelector("input[name='review']")
-		let writtenReviewValue = writtenReview.value
 		let submitReviewBtn = document.querySelector("input[name='submit-review']")
 		
+
 		submitReviewBtn.onclick = function(event) {
+			event.preventDefault()
+			let writtenReview = document.querySelector("input[name='review']")
+			let writtenReviewValue = writtenReview.value
+			console.log(asdf, writtenReviewValue)
 			submitBookReview(this.id, writtenReviewValue)
 		}
 
-	
+		
 		cardsContainer.appendChild(backCard)
 
+		let idKeeper = this.id
+
+		let promiseKeeper = new Promise(function(resolve,reject) {
+			resolve({id: idKeeper, heartSpan: favorite, readSpan: readTag})
+		})
+
+		return promiseKeeper
 	}
 }	
 
@@ -225,7 +237,10 @@ function renderBooks(books) {
 
 		let newCard = new Card(e.id, e.title, e.author, e.genre, e.description, e.image, e.rating, e.favorite, e.read_status)
 		
-		newCard.renderCard()
+		newCard.renderCard().then(function(r) {
+			console.log(r)
+		})
+		
 
 	})
 }
@@ -404,8 +419,9 @@ function addRating(bookId, ratingInput) {
 }
 
 function submitBookReview(bookId, userReview) {
+	console.log(bookId, userReview)
 
-	  let inputObject = {
+	let inputObject = {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
