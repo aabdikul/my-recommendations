@@ -19,6 +19,10 @@
 	display: none;
 }
 
+#review-form {
+	display: none;
+}
+
 .flip-card-container {
 	height: 350px;
 	width: 700px;

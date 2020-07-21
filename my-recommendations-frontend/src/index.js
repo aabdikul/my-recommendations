@@ -193,6 +193,14 @@ class Card {
     		}
 		}
 
+		let createReview = document.createElement('button')
+		createReview.innerHTML = "Write A Review"
+		backCard.appendChild(createReview)
+
+			createReview.onclick = function(event) {
+				
+			}
+
 		cardsContainer.appendChild(backCard)
 
 	}
