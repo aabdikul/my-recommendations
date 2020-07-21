@@ -1,5 +1,6 @@
 const BOOKS_URL = "http://localhost:3000/books"
 
+
 //global variables
 let addBook = false; 
 let main = document.querySelector('main')
@@ -96,6 +97,7 @@ class Card {
 				let rateButton = document.createElement('button')
 				rateButton.innerHTML = "Rate Book"
 				left.appendChild(rateButton)
+
 				rateButton.addEventListener("click", function(event) {
 					rateFormContainer.style.display = "block"
 					left.appendChild(rateFormContainer)
@@ -193,14 +195,26 @@ class Card {
     		}
 		}
 
-		let createReview = document.createElement('button')
-		createReview.innerHTML = "Write A Review"
-		backCard.appendChild(createReview)
+		let writeReviewBtn = document.createElement('button')
+		writeReviewBtn.innerHTML = "Write A Review"
+		backCard.appendChild(writeReviewBtn)
 
-			createReview.onclick = function(event) {
-				
-			}
+		let reviewFormContainer = document.getElementById('review-form')
 
+		writeReviewBtn.onclick = function(event) {
+			reviewFormContainer.style.display = "block"
+			backCard.appendChild(reviewFormContainer)
+		}
+
+		let writtenReview = document.querySelector("input[name='review']")
+		let writtenReviewValue = writtenReview.value
+		let submitReviewBtn = document.querySelector("input[name='submit-review']")
+		
+		submitReviewBtn.onclick = function(event) {
+			submitBookReview(this.id, writtenReviewValue)
+		}
+
+	
 		cardsContainer.appendChild(backCard)
 
 	}
@@ -387,6 +401,37 @@ function addRating(bookId, ratingInput) {
     location.reload()
   })
 
+}
+
+function submitBookReview(bookId, userReview) {
+
+	  let inputObject = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify( {
+        title: inputTitle,
+        author: inputAuthor,
+        genre: inputGenre,
+        description: inputDescription, 
+        image: inputImage,
+        rating: 0, 
+        favorite: false,
+        read_status: false
+      } )
+    }
+
+  return fetch('http://localhost:3000/books', inputObject)
+
+  .then(function(response) {
+    return response.json
+  })
+  .then(function(json) {
+    location.reload()
+  })
+  
 }
 
 
