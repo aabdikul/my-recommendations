@@ -1,0 +1,5 @@
+class RemoveDownvotesFromReviews < ActiveRecord::Migration[6.0]
+  def change
+    remove_column :reviews, :downvotes, :integer
+  end
+end

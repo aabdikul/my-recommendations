@@ -412,26 +412,20 @@ function submitBookReview(bookId, userReview) {
         "Accept": "application/json"
       },
       body: JSON.stringify( {
-        title: inputTitle,
-        author: inputAuthor,
-        genre: inputGenre,
-        description: inputDescription, 
-        image: inputImage,
-        rating: 0, 
-        favorite: false,
-        read_status: false
-      } )
+        review: userReview,
+        book_id: bookId
+      })
     }
 
-  return fetch('http://localhost:3000/books', inputObject)
+  return fetch('http://localhost:3000/reviews', inputObject)
 
   .then(function(response) {
     return response.json
   })
   .then(function(json) {
-    location.reload()
+    console.log(json)
   })
-  
+
 }
 
 
