@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
   	const bookAuthor = document.querySelector("input[name='author']");
   	const bookGenre = document.querySelector("input[name='genre']");
   	const bookDescription = document.querySelector("input[name='description']");
-  	const bookImage = document.querySelector("input[name='description']");
+  	const bookImage = document.querySelector("input[name='image']");
 
 	newBookBtn.addEventListener("click", () => { //gives ability to click and display new book form
     	addBook = !addBook;
@@ -88,32 +88,8 @@ class Card {
 			left.appendChild(h3)
 
 			let h4 = document.createElement('h4')
-			h4.innerHTML = "By: " + this.title
+			h4.innerHTML = "By: " + this.author
 			left.appendChild(h4)
-
-		let bookRating = document.createElement('span')//book rating UI
-
-			if (this.rating === 0) {
-				let rateFormContainer = document.getElementById("rating-form");//if the book has no rating, add the button to rate
-				let rateButton = document.createElement('button')
-				rateButton.innerHTML = "Rate Book"
-				left.appendChild(rateButton)
-
-				rateButton.addEventListener("click", function(event) {
-					rateFormContainer.style.display = "block"
-					left.appendChild(rateFormContainer)
-					const submitRating = document.querySelector("input[name='submit-rating']")
-					submitRating.addEventListener("click", function(event) {
-						let ratingValue = document.querySelector("input[name='rating']");
-						let finalRating = parseInt(ratingValue.value,10)//grab rating from field and submit to function
-						addRating(this.id, finalRating)
-					})
-				})
-			}
-			else {
-				bookRating.innerHTML = "Rating: " + this.rating
-				left.appendChild(bookRating)//show rating if book has rating
-			}
 
 		let p2 = document.createElement('p')//inner parts of left side of card
 		p2.innerHTML = "Description: " + this.description
@@ -188,36 +164,35 @@ class Card {
      			backCard.style.transform = "rotateY(180deg)";
     		}
 		}
-
+//
 		let writeReviewBtn = document.createElement('button')
+		writeReviewBtn.setAttribute("class", "review-button")
 		writeReviewBtn.innerHTML = "Write A Review"
 		backCard.appendChild(writeReviewBtn)
 
-		let reviewFormContainer = document.getElementById('review-form')
+		let reviewFormContainer = document.getElementById('review-form').cloneNode(true)
+		reviewFormContainer.id = `review-form-${this.id}`
 
-		writeReviewBtn.onclick = function(event) {
-			reviewFormContainer.style.display = "block"
-			backCard.appendChild(reviewFormContainer)
-		}
-
-		let submitReviewBtn = document.querySelector("input[name='submit-review']")
-		
-
-		submitReviewBtn.onclick = function(event) {
-			event.preventDefault()
-			let writtenReview = document.querySelector("input[name='review']")
-			let writtenReviewValue = writtenReview.value
-			console.log(asdf, writtenReviewValue)
-			submitBookReview(this.id, writtenReviewValue)
-		}
-
-		
+		let submitReviewBtn = reviewFormContainer.querySelector("input[name='submit-review']")
+//
 		cardsContainer.appendChild(backCard)
 
 		let idKeeper = this.id
+		let ratingKeeper = this.rating
 
 		let promiseKeeper = new Promise(function(resolve,reject) {
-			resolve({id: idKeeper, heartSpan: favorite, readSpan: readTag})
+			resolve({
+				id: idKeeper,
+				rating: ratingKeeper,
+				heartSpan: favorite,
+				readSpan: readTag,
+				backCard: backCard,
+				writeReviewBtn: writeReviewBtn,
+				reviewFormContainer: reviewFormContainer,
+				submitReviewBtn: submitReviewBtn,
+				left: left,
+				authorTag: h4 
+			})
 		})
 
 		return promiseKeeper
@@ -238,6 +213,47 @@ function renderBooks(books) {
 			r.readSpan.addEventListener("click", function(event) {
 				markRead(r.id, r.readSpan)//on click mark something as read or unread
 			})
+
+			r.writeReviewBtn.addEventListener("click", function(event) {
+				r.reviewFormContainer.style.display = "block"
+				r.backCard.appendChild(r.reviewFormContainer)
+			})
+
+			r.submitReviewBtn.addEventListener("click",function(event) {
+				event.preventDefault()
+				let writtenReview = r.reviewFormContainer.querySelector("input[name='review']")
+				let writtenReviewValue = writtenReview.value
+				submitBookReview(r.id, writtenReviewValue).then(function(e) {
+					r.reviewFormContainer.style.display = "none"
+					let singleReview = document.createElement('p')
+					singleReview.innerHTML = "Review: ".bold() + e.review
+					r.backCard.appendChild(singleReview)
+				})
+			})
+
+			if (r.rating === 0) {
+				let rateFormContainer = document.getElementById("rating-form").cloneNode(true);//if the book has no rating, add the button to rate
+				rateFormContainer.id = `rating-form-${r.id}`
+				let rateButton = document.createElement('button')
+				rateButton.innerHTML = "Rate Book"
+				r.authorTag.after(rateButton)
+
+				rateButton.addEventListener("click", function(event) {
+					rateFormContainer.style.display = "block"
+					r.left.appendChild(rateFormContainer)
+					const submitRating = rateFormContainer.querySelector("input[name='submit-rating']")
+					submitRating.addEventListener("click", function(event) {
+						let ratingValue = rateFormContainer.querySelector("input[name='rating']");
+						let finalRating = parseInt(ratingValue.value,10)//grab rating from field and submit to function
+						addRating(r.id, finalRating)
+					})
+				})
+			}
+			else {
+				let bookRating = document.createElement('span')//book rating UI
+				bookRating.innerHTML = "Rating: " + r.rating
+				r.authorTag.after(bookRating)//show rating if book has rating
+			}
 		})
 		
 
@@ -418,7 +434,6 @@ function addRating(bookId, ratingInput) {
 }
 
 function submitBookReview(bookId, userReview) {
-	console.log(bookId, userReview)
 
 	let inputObject = {
       method: "POST",
@@ -433,9 +448,8 @@ function submitBookReview(bookId, userReview) {
     }
 
   return fetch('http://localhost:3000/reviews', inputObject)
-
   .then(function(response) {
-    return response.json
+    return response.json()
   })
   .then(function(json) {
     return json
