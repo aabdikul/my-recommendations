@@ -24350,3 +24350,290 @@ Processing by BooksController#update as JSON
 Completed 200 OK in 10ms (Views: 0.1ms | ActiveRecord: 3.4ms | Allocations: 3421)
 
 
+Started GET "/books" for ::1 at 2020-07-21 00:14:12 -0400
+Processing by BooksController#index as */*
+  [1m[36mBook Load (0.4ms)[0m  [1m[34mSELECT "books".* FROM "books"[0m
+  ↳ app/controllers/books_controller.rb:5:in `index'
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 1]]
+  ↳ app/controllers/books_controller.rb:5:in `index'
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 2]]
+  ↳ app/controllers/books_controller.rb:5:in `index'
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 3]]
+  ↳ app/controllers/books_controller.rb:5:in `index'
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 4]]
+  ↳ app/controllers/books_controller.rb:5:in `index'
+  [1m[36mReview Load (0.1ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 5]]
+  ↳ app/controllers/books_controller.rb:5:in `index'
+Completed 200 OK in 22ms (Views: 0.1ms | ActiveRecord: 1.4ms | Allocations: 6319)
+
+
+Started GET "/books/1" for ::1 at 2020-07-21 00:14:12 -0400
+Processing by BooksController#show as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mBook Load (0.2ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/books_controller.rb:14:in `show'
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 1]]
+  ↳ app/controllers/books_controller.rb:15:in `show'
+Completed 200 OK in 9ms (Views: 0.2ms | ActiveRecord: 0.4ms | Allocations: 1877)
+
+
+Started GET "/books/3" for ::1 at 2020-07-21 00:14:12 -0400
+Processing by BooksController#show as */*
+  Parameters: {"id"=>"3"}
+  [1m[36mBook Load (0.2ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/books_controller.rb:14:in `show'
+  [1m[36mReview Load (0.1ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 3]]
+  ↳ app/controllers/books_controller.rb:15:in `show'
+Completed 200 OK in 4ms (Views: 0.1ms | ActiveRecord: 0.3ms | Allocations: 1776)
+
+
+Started GET "/books/4" for ::1 at 2020-07-21 00:14:12 -0400
+Processing by BooksController#show as */*
+  Parameters: {"id"=>"4"}
+  [1m[36mBook Load (0.2ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/books_controller.rb:14:in `show'
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 4]]
+  ↳ app/controllers/books_controller.rb:15:in `show'
+Completed 200 OK in 5ms (Views: 0.1ms | ActiveRecord: 0.4ms | Allocations: 1774)
+
+
+Started GET "/books/5" for ::1 at 2020-07-21 00:14:12 -0400
+Started GET "/books/2" for ::1 at 2020-07-21 00:14:12 -0400
+Processing by BooksController#show as */*
+  Parameters: {"id"=>"2"}
+  [1m[36mBook Load (0.2ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+Processing by BooksController#show as */*
+  ↳ app/controllers/books_controller.rb:14:in `show'
+  Parameters: {"id"=>"5"}
+  [1m[36mBook Load (0.2ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 2]]
+  ↳ app/controllers/books_controller.rb:15:in `show'
+Completed 200 OK in 9ms (Views: 0.1ms | ActiveRecord: 0.4ms | Allocations: 2658)
+
+
+  ↳ app/controllers/books_controller.rb:14:in `show'
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 5]]
+  ↳ app/controllers/books_controller.rb:15:in `show'
+Completed 200 OK in 8ms (Views: 0.2ms | ActiveRecord: 0.4ms | Allocations: 2750)
+
+
+Started GET "/books" for ::1 at 2020-07-21 00:14:20 -0400
+Processing by BooksController#index as */*
+  [1m[36mBook Load (0.3ms)[0m  [1m[34mSELECT "books".* FROM "books"[0m
+  ↳ app/controllers/books_controller.rb:5:in `index'
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 1]]
+  ↳ app/controllers/books_controller.rb:5:in `index'
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 2]]
+  ↳ app/controllers/books_controller.rb:5:in `index'
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 3]]
+  ↳ app/controllers/books_controller.rb:5:in `index'
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 4]]
+  ↳ app/controllers/books_controller.rb:5:in `index'
+  [1m[36mReview Load (0.1ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 5]]
+  ↳ app/controllers/books_controller.rb:5:in `index'
+Completed 200 OK in 33ms (Views: 0.1ms | ActiveRecord: 1.5ms | Allocations: 6292)
+
+
+Started GET "/books/1" for ::1 at 2020-07-21 00:14:20 -0400
+Processing by BooksController#show as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mBook Load (0.3ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/books_controller.rb:14:in `show'
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 1]]
+  ↳ app/controllers/books_controller.rb:15:in `show'
+Completed 200 OK in 26ms (Views: 0.1ms | ActiveRecord: 0.5ms | Allocations: 4140)
+
+
+Started GET "/books/3" for ::1 at 2020-07-21 00:14:20 -0400
+Started GET "/books/2" for ::1 at 2020-07-21 00:14:20 -0400
+Processing by BooksController#show as */*
+  Parameters: {"id"=>"2"}
+  [1m[36mBook Load (0.1ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/books_controller.rb:14:in `show'
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 2]]
+  ↳ app/controllers/books_controller.rb:15:in `show'
+Completed 200 OK in 4ms (Views: 0.2ms | ActiveRecord: 0.3ms | Allocations: 1776)
+
+
+Started GET "/books/4" for ::1 at 2020-07-21 00:14:20 -0400
+Processing by BooksController#show as */*
+  Parameters: {"id"=>"4"}
+  [1m[36mBook Load (0.1ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/books_controller.rb:14:in `show'
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 4]]
+  ↳ app/controllers/books_controller.rb:15:in `show'
+Started GET "/books/5" for ::1 at 2020-07-21 00:14:20 -0400
+Completed 200 OK in 5ms (Views: 0.3ms | ActiveRecord: 0.3ms | Allocations: 1774)
+
+
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+Processing by BooksController#show as */*
+  Parameters: {"id"=>"3"}
+  [1m[36mBook Load (0.1ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+Processing by BooksController#show as */*
+  ↳ app/controllers/books_controller.rb:14:in `show'
+  [1m[36mReview Load (0.1ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 3]]
+  Parameters: {"id"=>"5"}
+  ↳ app/controllers/books_controller.rb:15:in `show'
+  [1m[36mBook Load (0.2ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/books_controller.rb:14:in `show'
+Completed 200 OK in 6ms (Views: 0.2ms | ActiveRecord: 0.3ms | Allocations: 2855)
+
+
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 5]]
+  ↳ app/controllers/books_controller.rb:15:in `show'
+Completed 200 OK in 7ms (Views: 0.1ms | ActiveRecord: 0.4ms | Allocations: 2239)
+
+
+Started PATCH "/books/1" for ::1 at 2020-07-21 00:14:22 -0400
+Processing by BooksController#update as JSON
+  Parameters: {"book_id"=>1, "favorite"=>true, "id"=>"1", "book"=>{"favorite"=>true}}
+  [1m[36mBook Load (0.1ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/books_controller.rb:24:in `update'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/books_controller.rb:25:in `update'
+  [1m[36mBook Update (0.4ms)[0m  [1m[33mUPDATE "books" SET "favorite" = ?, "updated_at" = ? WHERE "books"."id" = ?[0m  [["favorite", 1], ["updated_at", "2020-07-21 04:14:22.664790"], ["id", 1]]
+  ↳ app/controllers/books_controller.rb:25:in `update'
+  [1m[35m (1.2ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/books_controller.rb:25:in `update'
+Completed 200 OK in 7ms (Views: 0.1ms | ActiveRecord: 1.7ms | Allocations: 3418)
+
+
+Started PATCH "/books/1" for ::1 at 2020-07-21 00:14:23 -0400
+Processing by BooksController#update as JSON
+  Parameters: {"book_id"=>1, "favorite"=>false, "id"=>"1", "book"=>{"favorite"=>false}}
+  [1m[36mBook Load (0.1ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/books_controller.rb:24:in `update'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/books_controller.rb:25:in `update'
+  [1m[36mBook Update (0.4ms)[0m  [1m[33mUPDATE "books" SET "favorite" = ?, "updated_at" = ? WHERE "books"."id" = ?[0m  [["favorite", 0], ["updated_at", "2020-07-21 04:14:23.103092"], ["id", 1]]
+  ↳ app/controllers/books_controller.rb:25:in `update'
+  [1m[35m (2.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/books_controller.rb:25:in `update'
+Completed 200 OK in 9ms (Views: 0.1ms | ActiveRecord: 3.2ms | Allocations: 3419)
+
+
+Started GET "/books" for ::1 at 2020-07-21 00:14:47 -0400
+Processing by BooksController#index as */*
+  [1m[36mBook Load (0.3ms)[0m  [1m[34mSELECT "books".* FROM "books"[0m
+  ↳ app/controllers/books_controller.rb:5:in `index'
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 1]]
+  ↳ app/controllers/books_controller.rb:5:in `index'
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 2]]
+  ↳ app/controllers/books_controller.rb:5:in `index'
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 3]]
+  ↳ app/controllers/books_controller.rb:5:in `index'
+  [1m[36mReview Load (0.1ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 4]]
+  ↳ app/controllers/books_controller.rb:5:in `index'
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 5]]
+  ↳ app/controllers/books_controller.rb:5:in `index'
+Completed 200 OK in 18ms (Views: 0.4ms | ActiveRecord: 1.3ms | Allocations: 6319)
+
+
+Started GET "/books/1" for ::1 at 2020-07-21 00:14:47 -0400
+Processing by BooksController#show as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mBook Load (0.1ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/books_controller.rb:14:in `show'
+  [1m[36mReview Load (0.1ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 1]]
+  ↳ app/controllers/books_controller.rb:15:in `show'
+Completed 200 OK in 3ms (Views: 0.1ms | ActiveRecord: 0.3ms | Allocations: 1877)
+
+
+Started GET "/books/2" for ::1 at 2020-07-21 00:14:47 -0400
+Processing by BooksController#show as */*
+  Parameters: {"id"=>"2"}
+  [1m[36mBook Load (0.5ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/books_controller.rb:14:in `show'
+  [1m[36mReview Load (0.3ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 2]]
+Started GET "/books/4" for ::1 at 2020-07-21 00:14:47 -0400
+Processing by BooksController#show as */*
+  ↳ app/controllers/books_controller.rb:15:in `show'
+  Parameters: {"id"=>"4"}
+Started GET "/books/3" for ::1 at 2020-07-21 00:14:47 -0400
+  [1m[36mBook Load (0.1ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 4], ["LIMIT", 1]]
+  ↳ app/controllers/books_controller.rb:14:in `show'
+Started GET "/books/5" for ::1 at 2020-07-21 00:14:47 -0400
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 4]]
+Completed 200 OK in 33ms (Views: 0.1ms | ActiveRecord: 0.7ms | Allocations: 4109)
+
+
+  ↳ app/controllers/books_controller.rb:15:in `show'
+Processing by BooksController#show as */*
+Completed 200 OK in 9ms (Views: 0.2ms | ActiveRecord: 0.3ms | Allocations: 3238)
+
+
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT sqlite_version(*)[0m
+  Parameters: {"id"=>"3"}
+  [1m[36mBook Load (0.1ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 3], ["LIMIT", 1]]
+Processing by BooksController#show as */*
+  Parameters: {"id"=>"5"}
+  ↳ app/controllers/books_controller.rb:14:in `show'
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 3]]
+  ↳ app/controllers/books_controller.rb:15:in `show'
+Completed 200 OK in 8ms (Views: 0.1ms | ActiveRecord: 0.3ms | Allocations: 2838)
+
+
+  [1m[36mBook Load (0.3ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 5], ["LIMIT", 1]]
+  ↳ app/controllers/books_controller.rb:14:in `show'
+  [1m[36mReview Load (0.2ms)[0m  [1m[34mSELECT "reviews".* FROM "reviews" WHERE "reviews"."book_id" = ?[0m  [["book_id", 5]]
+  ↳ app/controllers/books_controller.rb:15:in `show'
+Completed 200 OK in 9ms (Views: 0.1ms | ActiveRecord: 0.5ms | Allocations: 3188)
+
+
+Started PATCH "/books/1" for ::1 at 2020-07-21 00:14:49 -0400
+Processing by BooksController#update as JSON
+  Parameters: {"book_id"=>1, "favorite"=>true, "id"=>"1", "book"=>{"favorite"=>true}}
+  [1m[36mBook Load (0.1ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/books_controller.rb:24:in `update'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/books_controller.rb:25:in `update'
+  [1m[36mBook Update (0.4ms)[0m  [1m[33mUPDATE "books" SET "favorite" = ?, "updated_at" = ? WHERE "books"."id" = ?[0m  [["favorite", 1], ["updated_at", "2020-07-21 04:14:49.281712"], ["id", 1]]
+  ↳ app/controllers/books_controller.rb:25:in `update'
+  [1m[35m (2.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/books_controller.rb:25:in `update'
+Completed 200 OK in 8ms (Views: 0.1ms | ActiveRecord: 3.1ms | Allocations: 3418)
+
+
+Started PATCH "/books/1" for ::1 at 2020-07-21 00:14:49 -0400
+Processing by BooksController#update as JSON
+  Parameters: {"book_id"=>1, "favorite"=>false, "id"=>"1", "book"=>{"favorite"=>false}}
+  [1m[36mBook Load (0.2ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/books_controller.rb:24:in `update'
+  [1m[35m (0.0ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/books_controller.rb:25:in `update'
+  [1m[36mBook Update (0.4ms)[0m  [1m[33mUPDATE "books" SET "favorite" = ?, "updated_at" = ? WHERE "books"."id" = ?[0m  [["favorite", 0], ["updated_at", "2020-07-21 04:14:49.776870"], ["id", 1]]
+  ↳ app/controllers/books_controller.rb:25:in `update'
+  [1m[35m (2.7ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/books_controller.rb:25:in `update'
+Completed 200 OK in 9ms (Views: 0.1ms | ActiveRecord: 3.3ms | Allocations: 3419)
+
+
+Started PATCH "/books/1" for ::1 at 2020-07-21 00:14:50 -0400
+Processing by BooksController#update as JSON
+  Parameters: {"book_id"=>1, "read_status"=>true, "id"=>"1", "book"=>{"read_status"=>true}}
+  [1m[36mBook Load (0.2ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/books_controller.rb:24:in `update'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/books_controller.rb:25:in `update'
+  [1m[36mBook Update (0.4ms)[0m  [1m[33mUPDATE "books" SET "read_status" = ?, "updated_at" = ? WHERE "books"."id" = ?[0m  [["read_status", 1], ["updated_at", "2020-07-21 04:14:50.498685"], ["id", 1]]
+  ↳ app/controllers/books_controller.rb:25:in `update'
+  [1m[35m (2.5ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/books_controller.rb:25:in `update'
+Completed 200 OK in 9ms (Views: 0.1ms | ActiveRecord: 3.1ms | Allocations: 3423)
+
+
+Started PATCH "/books/1" for ::1 at 2020-07-21 00:14:51 -0400
+Processing by BooksController#update as JSON
+  Parameters: {"book_id"=>1, "read_status"=>false, "id"=>"1", "book"=>{"read_status"=>false}}
+  [1m[36mBook Load (0.2ms)[0m  [1m[34mSELECT "books".* FROM "books" WHERE "books"."id" = ? LIMIT ?[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/books_controller.rb:24:in `update'
+  [1m[35m (0.1ms)[0m  [1m[36mbegin transaction[0m
+  ↳ app/controllers/books_controller.rb:25:in `update'
+  [1m[36mBook Update (0.4ms)[0m  [1m[33mUPDATE "books" SET "read_status" = ?, "updated_at" = ? WHERE "books"."id" = ?[0m  [["read_status", 0], ["updated_at", "2020-07-21 04:14:51.195136"], ["id", 1]]
+  ↳ app/controllers/books_controller.rb:25:in `update'
+  [1m[35m (2.6ms)[0m  [1m[36mcommit transaction[0m
+  ↳ app/controllers/books_controller.rb:25:in `update'
+Completed 200 OK in 9ms (Views: 0.1ms | ActiveRecord: 3.2ms | Allocations: 3419)
+
+

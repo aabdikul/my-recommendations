@@ -163,10 +163,6 @@ class Card {
 			}
 		left.appendChild(readTag)
 
-			readTag.addEventListener("click", function(event) {
-				markRead(this.id, readTag)//on click mark something as read or unread
-			})
-
 		let backCard = document.createElement('div')
 		backCard.setAttribute("class", "back-card")//create container of back of card
 
@@ -234,11 +230,14 @@ function renderBooks(books) {
 		let newCard = new Card(e.id, e.title, e.author, e.genre, e.description, e.image, e.rating, e.favorite, e.read_status)
 		
 		newCard.renderCard().then(function(r) {
+
 			r.heartSpan.addEventListener("click", function(event) {
 				favoriteBook(r.id, r.heartSpan)//add click event and then run function to favorite/unfavorite book
 			})
 
-	
+			r.readSpan.addEventListener("click", function(event) {
+				markRead(r.id, r.readSpan)//on click mark something as read or unread
+			})
 		})
 		
 
