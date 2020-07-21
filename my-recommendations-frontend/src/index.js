@@ -47,13 +47,13 @@ function fetchBooks() {//fetch from Rails backend
 		})
 		.then(function(json) {
 		renderBooks(json);
-		renderReviews(json);
 		return json
 		});
 }
 
 class Card {
-	constructor(title, author, genre, description, image, rating, favorite, read_status) {
+	constructor(id, title, author, genre, description, image, rating, favorite, read_status) {
+		this.id = id;
 		this.title = title;
 		this.author = author;
 		this.genre = genre;
@@ -64,13 +64,7 @@ class Card {
 		this.read_status = read_status
 	}
 
-	renderCard() {
-
-	}
-}	
-
-function renderBooks(books) {	
-	books.map(function(e) {
+	renderCard() {//render cards function
 		let cardsContainer = document.createElement('div') //creates entire card container 
 		cardsContainer.setAttribute("class", "flip-card-container")
 		main.appendChild(cardsContainer) 
@@ -88,50 +82,52 @@ function renderBooks(books) {
 		card.appendChild(right)
 
 			let h3 = document.createElement('h3')//inner parts of left side of card
-			h3.innerHTML = e.title
+			h3.innerHTML = this.title
 			left.appendChild(h3)
 
 			let h4 = document.createElement('h4')
-			h4.innerHTML = "By: " + e.author
+			h4.innerHTML = "By: " + this.title
 			left.appendChild(h4)
 
 		let bookRating = document.createElement('span')//book rating UI
-		if (e.rating === 0) {
-			let rateFormContainer = document.getElementById("rating-form");//if the book has no rating, add the button to rate
-			let rateButton = document.createElement('button')
-			rateButton.innerHTML = "Rate Book"
-			left.appendChild(rateButton)
-			rateButton.addEventListener("click", function(event) {
-				rateFormContainer.style.display = "block"
-				left.appendChild(rateFormContainer)
-				const submitRating = document.querySelector("input[name='submit-rating']")
-				submitRating.addEventListener("click", function(event) {
-					let ratingValue = document.querySelector("input[name='rating']");
-					let finalRating = parseInt(ratingValue.value,10)//grab rating from field and submit to function
-					addRating(e.id, finalRating)
+
+			if (this.rating === 0) {
+				let rateFormContainer = document.getElementById("rating-form");//if the book has no rating, add the button to rate
+				let rateButton = document.createElement('button')
+				rateButton.innerHTML = "Rate Book"
+				left.appendChild(rateButton)
+				rateButton.addEventListener("click", function(event) {
+					rateFormContainer.style.display = "block"
+					left.appendChild(rateFormContainer)
+					const submitRating = document.querySelector("input[name='submit-rating']")
+					submitRating.addEventListener("click", function(event) {
+						let ratingValue = document.querySelector("input[name='rating']");
+						let finalRating = parseInt(ratingValue.value,10)//grab rating from field and submit to function
+						addRating(this.id, finalRating)
+					})
 				})
-			})
-		}
-		else {
-			bookRating.innerHTML = "Rating: " + e.rating
-			left.appendChild(bookRating)//show rating if book has rating
-		}
+			}
+			else {
+				bookRating.innerHTML = "Rating: " + this.rating
+				left.appendChild(bookRating)//show rating if book has rating
+			}
 
 		let p2 = document.createElement('p')//inner parts of left side of card
-		p2.innerHTML = "Description: " + e.description
+		p2.innerHTML = "Description: " + this.description
 		left.appendChild(p2)
 
 		let p1 = document.createElement('p')//inner parts of left side of card
-		p1.innerHTML = "Genre: " + e.genre
+		p1.innerHTML = "Genre: " + this.genre
 		left.appendChild(p1)
 
 		let img = document.createElement('img')//inner parts of right side of card
-		img.src = e.image
+		img.src = this.image
 		right.appendChild(img)
 
 		let favorite = document.createElement("span")//heart icon 
 		favorite.classList.add("heart")
-			if (e.favorite == true) {//if favorite is true, set to blackheart
+			
+			if (this.favorite == true) {//if favorite is true, set to blackheart
 				favorite.innerHTML = blackHeart 
 			}
 			else {
@@ -139,10 +135,9 @@ function renderBooks(books) {
 			}
 		left.appendChild(favorite)
 
-		favorite.addEventListener("click", function(event) {
-			favoriteBook(e.id, favorite)//add click event and then run function to favorite/unfavorite book
-		})
-
+			favorite.addEventListener("click", function(event) {
+				favoriteBook(this.id, favorite)//add click event and then run function to favorite/unfavorite book
+			})
 
 		let seeReviews = document.createElement('button')//see reviews button
 		seeReviews.innerHTML = "See Reviews"
@@ -156,12 +151,11 @@ function renderBooks(books) {
     		else {
      			backCard.style.transform = "rotateY(180deg)";
     		}
-
 		}
 
 		let readTag = document.createElement("span")
 		readTag.classList.add("read")
-			if (e.read_status == true) {
+			if (this.read_status == true) {
 				readTag.innerHTML = "Read"//add read or unread based on read_status
 			}
 			else {
@@ -169,22 +163,21 @@ function renderBooks(books) {
 			}
 		left.appendChild(readTag)
 
-		readTag.addEventListener("click", function(event) {
-			markRead(e.id, readTag)//on click mark something as read or unread
-		})
+			readTag.addEventListener("click", function(event) {
+				markRead(this.id, readTag)//on click mark something as read or unread
+			})
 
 		let backCard = document.createElement('div')
 		backCard.setAttribute("class", "back-card")//create container of back of card
 
-
-		renderReviews(e.id).then(function(allReviews) {
+		renderReviews(this.id).then(function(allReviews) {
 			allReviews.map(function(individualReview) {//run function to render reviews, pull from promise, then iterate and render each reviews
 				backCard.appendChild(individualReview)
 			})
 		})
 
 		let backHeader = document.createElement('h2')
-		backHeader.innerHTML = `Reviews of ${e.title}`
+		backHeader.innerHTML = `Reviews of ${this.title}`
 		backCard.appendChild(backHeader)
 
 		let frontButton = document.createElement('button')
@@ -200,7 +193,17 @@ function renderBooks(books) {
     		}
 		}
 
-		cardsContainer.appendChild(backCard)	
+		cardsContainer.appendChild(backCard)
+
+	}
+}	
+
+function renderBooks(books) {	
+	books.map(function(e) {
+
+		let newCard = new Card(e.id, e.title, e.author, e.genre, e.description, e.image, e.rating, e.favorite, e.read_status)
+		
+		newCard.renderCard()
 
 	})
 }
@@ -215,7 +218,8 @@ function renderReviews(bookId) {//render reviews based on ID
 		.then(function(json) {
 			return json.reviews.map(function(objects) {
 				let userReviews = document.createElement('p')
-				userReviews.innerHTML = objects.review
+				let string = "Review: "
+				userReviews.innerHTML = string.bold() + objects.review
 				return userReviews
 			})
 		
