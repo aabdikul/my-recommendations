@@ -130,6 +130,7 @@ class Card {
 		let favorite = document.createElement("span")//heart icon 
 		favorite.classList.add("heart")
 		favorite.setAttribute("id", `heart-${this.id}`)
+		left.appendChild(favorite)
 			
 			if (this.favorite == true) {//if favorite is true, set to blackheart
 				favorite.innerHTML = blackHeart 
@@ -137,11 +138,6 @@ class Card {
 			else {
 				favorite.innerHTML = whiteHeart //else false
 			}
-		left.appendChild(favorite)
-
-			favorite.addEventListener("click", function(event) {
-				favoriteBook(this.id, favorite)//add click event and then run function to favorite/unfavorite book
-			})
 
 		let seeReviews = document.createElement('button')//see reviews button
 		seeReviews.innerHTML = "See Reviews"
@@ -238,7 +234,11 @@ function renderBooks(books) {
 		let newCard = new Card(e.id, e.title, e.author, e.genre, e.description, e.image, e.rating, e.favorite, e.read_status)
 		
 		newCard.renderCard().then(function(r) {
-			console.log(r)
+			r.heartSpan.addEventListener("click", function(event) {
+				favoriteBook(r.id, r.heartSpan)//add click event and then run function to favorite/unfavorite book
+			})
+
+	
 		})
 		
 
@@ -439,7 +439,7 @@ function submitBookReview(bookId, userReview) {
     return response.json
   })
   .then(function(json) {
-    console.log(json)
+    return json
   })
 
 }
