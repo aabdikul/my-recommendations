@@ -82,6 +82,19 @@ class Card {
 		right.setAttribute("class", "right")
 		card.appendChild(right)
 
+			let favorite = document.createElement("span")//heart icon 
+			favorite.classList.add("heart")
+			favorite.setAttribute("id", `heart-${this.id}`)
+			left.appendChild(favorite)
+			
+			if (this.favorite == true) {//if favorite is true, set to blackheart
+				favorite.innerHTML = blackHeart 
+			}
+			else {
+				favorite.innerHTML = whiteHeart //else false
+			}
+
+
 			let h3 = document.createElement('h3')//inner parts of left side of card
 			h3.innerHTML = this.title
 			left.appendChild(h3)
@@ -102,18 +115,6 @@ class Card {
 		img.src = this.image
 		right.appendChild(img)
 
-		let favorite = document.createElement("span")//heart icon 
-		favorite.classList.add("heart")
-		favorite.setAttribute("id", `heart-${this.id}`)
-		left.appendChild(favorite)
-			
-			if (this.favorite == true) {//if favorite is true, set to blackheart
-				favorite.innerHTML = blackHeart 
-			}
-			else {
-				favorite.innerHTML = whiteHeart //else false
-			}
-
 		let seeReviews = document.createElement('button')//see reviews button
 		seeReviews.innerHTML = "See Reviews"
 		left.appendChild(seeReviews)
@@ -127,6 +128,7 @@ class Card {
      			backCard.style.transform = "rotateY(180deg)";
     		}
 		}
+		
 
 		let readTag = document.createElement("span")
 		readTag.classList.add("read")
