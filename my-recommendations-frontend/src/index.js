@@ -9,7 +9,6 @@ const blackHeart = '\u2665';
 
 document.addEventListener("DOMContentLoaded", function() {
 	fetchBooks();
-
 	const newBookBtn = document.querySelector("#new-book") //button to add a new book
 	const bookFormContainer = document.getElementById("book-form");//add book form
 
@@ -251,7 +250,28 @@ function renderBooks(books) {
 			}
 			else {
 				let bookRating = document.createElement('span')//book rating UI
-				bookRating.innerHTML = "Rating: " + r.rating
+
+				const whiteStar = '\u2606';
+
+				const blackStar = '\u2605';
+		
+	
+				if (r.rating == 5) {
+					bookRating.textContent = blackStar + blackStar + blackStar + blackStar + blackStar
+				} 
+				else if (r.rating == 4) {
+					bookRating.textContent = blackStar + blackStar + blackStar + blackStar + whiteStar
+				}
+				else if (r.rating == 3) {
+					bookRating.textContent = blackStar + blackStar + blackStar + whiteStar + whiteStar
+				}
+				else if (r.rating == 2) {
+					bookRating.textContent = blackStar + blackStar + whiteStar + whiteStar + whiteStar
+				}
+				else {
+					bookRating.textContent = blackStar + whiteStar + whiteStar + whiteStar + whiteStar 
+				}
+			
 				r.authorTag.after(bookRating)//show rating if book has rating
 			}
 		})
