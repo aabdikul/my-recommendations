@@ -1,5 +1,33 @@
 const BOOKS_URL = "http://localhost:3000/books"
 
+let buttonSort = document.querySelector("input[name='sort-button']")
+buttonSort.addEventListener("click", () => {
+	fetchAllBooks();
+})
+
+
+function fetchAllBooks() {
+		fetch(BOOKS_URL)
+		.then(function(response) {
+		return response.json();
+		})
+		.then(function(json) {
+		json.sort(function(a,b) {
+			let titleA = a.title.toUpperCase();
+			let titleB = b.title.toUpperCase();
+			if (titleA < titleB) {
+				return -1;
+			}
+			if (titleA > titleB) {
+				return 1;
+			}
+			return 0;
+		})
+		console.log(json)
+	});
+}
+
+
 
 //global variables
 let addBook = false; 
@@ -9,14 +37,14 @@ const blackHeart = '\u2665';
 
 document.addEventListener("DOMContentLoaded", function() {
 	fetchBooks();
-	const newBookBtn = document.querySelector("#new-book") //button to add a new book
-	const bookFormContainer = document.getElementById("book-form");//add book form
 
-	const bookTitle = document.querySelector("input[name='title']");//fields in form
-  	const bookAuthor = document.querySelector("input[name='author']");
-  	const bookGenre = document.querySelector("input[name='genre']");
-  	const bookDescription = document.querySelector("input[name='description']");
-  	const bookImage = document.querySelector("input[name='image']");
+		const newBookBtn = document.querySelector("#new-book") //button to add a new book
+		const bookFormContainer = document.getElementById("book-form");//add book form
+		const bookTitle = document.querySelector("input[name='title']");//fields in form
+  		const bookAuthor = document.querySelector("input[name='author']");
+  		const bookGenre = document.querySelector("input[name='genre']");
+  		const bookDescription = document.querySelector("input[name='description']");
+  		const bookImage = document.querySelector("input[name='image']");
 
 	newBookBtn.addEventListener("click", () => { //gives ability to click and display new book form
     	addBook = !addBook;
@@ -42,13 +70,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
 function fetchBooks() {//fetch from Rails backend
 	return fetch(BOOKS_URL)
-		.then(function(response) {
-		return response.json();
-		})
-		.then(function(json) {
-		renderBooks(json);
-		return json
-		});
+		.then(resp => resp.json())
+		.then(json => renderBooks(json));
 }
 
 class Card {
@@ -119,7 +142,7 @@ class Card {
 		seeReviews.innerHTML = "See Reviews"
 		left.appendChild(seeReviews)
 
-		seeReviews.onclick = function(event) {//add event on click to rotate the card
+		seeReviews.addEventListener("click", (event) => { //add event on click to rotate the card
 
     		if (backCard.style.transform == "rotateY(180deg)") {
      			backCard.style.transform = "rotateY(0deg)";
@@ -127,7 +150,7 @@ class Card {
     		else {
      			backCard.style.transform = "rotateY(180deg)";
     		}
-		}
+		})
 		
 
 		let readTag = document.createElement("span")
@@ -157,14 +180,14 @@ class Card {
 		frontButton.innerHTML = "Return to Book" //flip back to front button
 		backCard.appendChild(frontButton)
 
-		frontButton.onclick= function(event) {
+		frontButton.addEventListener("click", (event) => {
 			if (backCard.style.transform == "rotateY(180deg)") {//on click, flip back to front
      			backCard.style.transform = "rotateY(0deg)";
     			}
     		else {
      			backCard.style.transform = "rotateY(180deg)";
     		}
-		}
+		})
 //
 		let writeReviewBtn = document.createElement('button')
 		writeReviewBtn.setAttribute("class", "review-button")
