@@ -2,17 +2,15 @@ const BOOKS_URL = "http://localhost:3000/books"
 
 let buttonSort = document.querySelector("input[name='sort-button']")
 buttonSort.addEventListener("click", () => {
-	fetchAllBooks();
+	clearAllBooks();
+	sortAllBooks();
 })
 
-
-function fetchAllBooks() {
+function sortAllBooks() {
 		fetch(BOOKS_URL)
-		.then(function(response) {
-		return response.json();
-		})
-		.then(function(json) {
-		json.sort(function(a,b) {
+		.then(resp => resp.json())
+		.then(json => {
+			return json.sort(function(a,b) {
 			let titleA = a.title.toUpperCase();
 			let titleB = b.title.toUpperCase();
 			if (titleA < titleB) {
@@ -23,10 +21,16 @@ function fetchAllBooks() {
 			}
 			return 0;
 		})
-		console.log(json)
-	});
+	})
+	.then(json=> renderBooks(json));
 }
 
+function clearAllBooks() {	
+	let allFlips = document.querySelectorAll(".flip-card-container")
+	for (const flip of allFlips) {
+		flip.remove()
+	}
+}
 
 
 //global variables
